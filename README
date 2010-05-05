@@ -1,7 +1,7 @@
 $HOME/.zsh/
 -----------
 
-git clone git://github.com/Oshuma/zsh-dir.git ~/.zsh
-ln -s ~/.zsh/zshrc ~/.zshrc
+git clone git://github.com/Oshuma/zsh-dir.git $HOME/.zsh
+ln -s $HOME/.zsh/zshrc $HOME/.zshrc
 
 Overrides or OS specific settings can go in custom/*.zsh as it's loaded after lib/*.zsh
