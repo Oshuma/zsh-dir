@@ -4,8 +4,10 @@
 
 # TODO: Split this beast into ~/.zsh/lib/*.zsh
 
+export ZSH_HOME=$HOME/.zsh
+
 # History
-HISTFILE=~/.zsh_history
+HISTFILE=$ZSH_HOME/tmp/.zsh_history
 HISTSIZE=1000
 SAVEHIST=1000
 setopt hist_ignore_dups
@@ -116,7 +118,6 @@ function gc {
 # }
 
 
-# Load any .zsh config files in $HOME/.zsh/lib/
-export ZSH_HOME=$HOME/.zsh
+# Load the library files, then custom files.
 for config_file ($ZSH_HOME/lib/*.zsh)    source $config_file
 for custom_file ($ZSH_HOME/custom/*.zsh) source $custom_file
