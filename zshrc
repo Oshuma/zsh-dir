@@ -48,7 +48,6 @@ zle -N self-insert url-quote-magic
 # variables
 # ----------------------
 # export PATH=$PATH:/sbin:/usr/sbin
-export PATH=$PATH:"/home/oshuma/Source/Java/BlackBerry/WTK2.5.2/bin"
 export EDITOR=/usr/bin/vim
 export GREP_OPTIONS='--color=auto'
 export LC_ALL=C
@@ -85,7 +84,6 @@ alias gd='git diff'
 alias gi='git status; echo; git branch -av'
 alias gm='git merge '
 alias gnb='git checkout -b ' # must pass new branch name
-# alias gx='gitx'
 
 # ruby
 alias ra='rake'
