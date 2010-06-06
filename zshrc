@@ -6,15 +6,6 @@
 
 export ZSH_HOME=$HOME/.zsh
 
-# History
-HISTFILE=$ZSH_HOME/tmp/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000
-setopt hist_ignore_dups
-setopt hist_verify
-setopt extended_history
-setopt hist_expire_dups_first
-
 # Bindings
 bindkey -e
 bindkey "^A" beginning-of-line
@@ -57,47 +48,6 @@ export IRB_HISTORY_FILE=$HOME/.irb_history
 
 
 # ----------------------
-# aliases
-# ----------------------
-alias cp='cp -i'
-alias mv='mv -i'
-alias rm='rm -i'
-
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-
-alias _='sudo'
-alias dirs='dirs -v'
-alias ls='ls --color -F'
-alias l='ls -l'
-alias la='ls -a'
-alias lh='ls -lh'
-alias rails='nocorrect rails'
-alias scr='screen -A -m -S'
-
-# git
-alias git='nocorrect git' # no zsh correction for 'git'
-alias ga='git add'
-alias gb='git branch -a -v'
-alias gd='git diff'
-alias gi='git status; echo; git branch -av'
-alias gm='git merge '
-alias gnb='git checkout -b ' # must pass new branch name
-
-# ruby
-alias ra='rake'
-alias rt='rake --tasks'
-alias gemi='gem install --no-ri --no-rdoc '
-alias sgemi='sudo gem install --no-ri --no-rdoc '
-alias bundle='nocorrect bundle'
-
-# misc
-alias pfind='ps aux |grep '
-alias getip="curl -s http://checkip.dyndns.org | sed 's/[^0-9.]//g'"
-
-
-# ----------------------
 # functions
 # ----------------------
 
@@ -117,5 +67,6 @@ function gc {
 
 
 # Load the library files, then custom files.
+# TODO: OS detection when loading custom/ files.
 for config_file ($ZSH_HOME/lib/*.zsh)    source $config_file
 for custom_file ($ZSH_HOME/custom/*.zsh) source $custom_file
