@@ -8,8 +8,11 @@ export ZSH_HOME=$HOME/.zsh
 
 # Bindings
 bindkey -e
-bindkey "^A" beginning-of-line
-bindkey "^E" end-of-line
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
+bindkey '^r' history-incremental-search-backward
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search
 
 # Completion
 autoload -Uz compinit
