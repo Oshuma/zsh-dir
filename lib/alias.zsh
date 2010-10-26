@@ -30,6 +30,7 @@ alias rails='nocorrect rails'
 alias gemi='gem install --no-ri --no-rdoc '
 alias sgemi='sudo gem install --no-ri --no-rdoc '
 alias bundle='nocorrect bundle'
+alias autotest='nocorrect autotest'
 
 # misc
 alias pfind='ps aux |grep '

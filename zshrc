@@ -7,12 +7,12 @@
 export ZSH_HOME=$HOME/.zsh
 
 # Bindings
-bindkey -e
-bindkey '^A' beginning-of-line
-bindkey '^E' end-of-line
-bindkey '^r' history-incremental-search-backward
-bindkey '^[[A' up-line-or-search
-bindkey '^[[B' down-line-or-search
+# bindkey -v
+# bindkey '^A' beginning-of-line
+# bindkey '^E' end-of-line
+# bindkey '^r' history-incremental-search-backward
+# bindkey '^[[A' up-line-or-search
+# bindkey '^[[B' down-line-or-search
 
 # Completion
 autoload -Uz compinit
@@ -41,12 +41,12 @@ zle -N self-insert url-quote-magic
 # ----------------------
 # variables
 # ----------------------
-# export PATH=$PATH:/sbin:/usr/sbin
+export PATH=$PATH:$HOME/.zsh/bin
 export EDITOR=/usr/bin/vim
 export GREP_OPTIONS='--color=auto'
 export LC_ALL=C
 export PAGER=less
-export LESS='-M -R -X'
+export LESS='-F -M -R -X'
 export IRB_HISTORY_FILE=$HOME/.irb_history
 
 
