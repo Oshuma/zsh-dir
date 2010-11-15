@@ -1,0 +1,142 @@
+#!/usr/bin/env ruby
+
+require 'ipaddr'
+require 'optparse'
+
+# Simple script which adds the given IPs to /etc/hosts.deny (or the specified file).
+class DenyIP
+  DEFAULT_DENY_FILE = '/etc/hosts.deny'
+
+  def self.run!(*args)
+    new(*args).run!
+  end
+
+  def initialize(argv = ARGV)
+    @argv = argv
+    @options = {  # defaults
+      :file => DEFAULT_DENY_FILE,
+      :force => false,
+    }
+
+    # Stores all denied IPs (existing and new).
+    @denied_ips = []
+
+    # Any comments found in the hosts.deny file (so we can write them back).
+    @comments   = []
+
+    # Setup the OptionParser and use the remaining args as the IP list.
+    setup_option_parser!
+    @ip_list = @argv
+  end
+
+  # Only public facing method; does the actual work.
+  def run!
+    begin
+      @opt_parser.parse!(@argv)
+    rescue OptionParser::InvalidOption => error
+      $stderr.puts "#{error}\n#{@opt_parser}"
+    rescue OptionParser::MissingArgument => error
+      $stderr.puts "#{error}\n#{@opt_parser}"
+    end
+
+    # If no IPs given, output usage text.
+    if @ip_list.empty?
+      @opt_parser.parse!(['--help'])
+    end
+
+    # Prompt unless '--force' is passed.
+    unless @options[:force]
+      output("\n" + @ip_list.join("\n") + "\n\n")
+      choice = input("Block these IPs? (y/n) ")
+      exit unless choice == 'y' || choice == 'Y'
+    end
+
+    output("Blocking:")
+    @ip_list.each { |ip| output("  #{ip}") }
+
+    block_ips!
+  end
+
+  private
+
+  def block_ips!
+    read_hosts_file
+    compile_ip_list
+    write_hosts_file
+  end
+
+  # Stores the existing denied IPs in <em>@denied_ips</em>.
+  def read_hosts_file
+    File.readlines(@options[:file]).each do |line|
+      ip_match = line.match(/^ALL: (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/)
+      if ip_match
+        ip = ip_match[1]
+        @denied_ips << IPAddr.new(ip)
+      else
+        # If no IP was matched, assume the line is a comment.
+        @comments << line
+      end
+    end
+  end
+
+  # Add the newly denied IPs to the <em>@denied_ips</em> list
+  # (unless it's already in there).
+  def compile_ip_list
+    @ip_list.each do |ip|
+      begin
+        ip_object = IPAddr.new(ip)
+      rescue
+        output("\nInvalid IP: #{ip}\n")
+        exit
+      end
+      @denied_ips << ip_object unless @denied_ips.include?(ip_object)
+    end
+    @denied_ips.sort!
+  end
+
+  # Write the <em>@comments</em> and <em>@denied_ips</em> back to the hosts.deny file.
+  def write_hosts_file
+    File.open(@options[:file], 'w') do |file|
+      file.puts(@comments.join)
+      @denied_ips.each do |ip|
+        file.puts("ALL: #{ip.to_s}")
+      end
+    end
+  end
+
+  def setup_option_parser!
+    @opt_parser = OptionParser.new do |opts|
+      opts.banner = "Usage: #{File.basename($0)} [options] <ip_list>"
+      opts.separator ''
+      opts.separator 'Options:'
+
+      opts.on('--debug', 'Set the $DEBUG flag.') do |on_or_off|
+        $DEBUG = on_or_off
+      end
+
+      opts.on_tail('--help', 'Show this help message.') do
+        puts opts
+        exit
+      end
+
+      opts.on('--force', 'Suppress confirmation message.') do |force|
+        @options[:force] = force
+      end
+
+      opts.on('-f', "--file <#{DEFAULT_DENY_FILE}>", 'Use the specified hosts.deny file.') do |file|
+        @options[:file] = file
+      end
+    end
+  end
+
+  def output(message, opts = { :stream => STDOUT, :method => :puts })
+    opts[:stream].send(opts[:method], message)
+  end
+
+  def input(message)
+    output(message, :method => :print)
+    STDIN.gets.chomp
+  end
+end # DenyIP
+
+DenyIP.run! if $0 == __FILE__
