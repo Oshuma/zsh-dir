@@ -1,5 +1,5 @@
 # Automatically reconnects an ssh session on $interval.
-# To halt this function, do this: touch /tmp/ssh_no_reconnect
+# To halt this function, do this: touch /tmp/ssh_stop_reconnect
 function auto_ssh() {
   stop_file="/tmp/ssh_stop_reconnect"
   interval=5
