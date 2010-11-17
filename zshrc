@@ -6,6 +6,9 @@
 
 export ZSH_HOME=$HOME/.zsh
 
+# Load the environment variables first.
+source $ZSH_HOME/lib/environment.zsh
+
 # Bindings
 # bindkey -v
 # bindkey '^A' beginning-of-line
@@ -36,37 +39,6 @@ unsetopt beep
 # smart URL quoting
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
-
-
-# ----------------------
-# variables
-# ----------------------
-export PATH=$PATH:$HOME/.zsh/bin
-export EDITOR=/usr/bin/vim
-export GREP_OPTIONS='--color=auto'
-export LC_ALL=C
-export PAGER=less
-export LESS='-F -M -R -X'
-export IRB_HISTORY_FILE=$HOME/.irb_history
-
-
-# ----------------------
-# functions
-# ----------------------
-
-# gc      => git checkout master
-# gc bugs => git checkout bugs
-function gc {
-  if [ -z "$1" ]; then
-    git checkout master
-  else
-    git checkout $1
-  fi
-}
-
-# function trash {
-#   mv -i $* $HOME/.Trash/
-# }
 
 
 # Load the library files, then custom files.
