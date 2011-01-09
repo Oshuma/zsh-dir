@@ -16,6 +16,7 @@ class DenyIP
     @options = {  # defaults
       :file => DEFAULT_DENY_FILE,
       :force => false,
+      :geolocate => true,
     }
 
     # Stores all denied IPs (existing and new).
@@ -46,7 +47,15 @@ class DenyIP
 
     # Prompt unless '--force' is passed.
     unless @options[:force]
-      output("\n" + @ip_list.join("\n") + "\n\n")
+      if @options[:geolocate]
+        @ip_list.each do |ip|
+          output(`#{File.dirname(__FILE__)}/geo_ip #{ip}`)
+          output("\n")
+        end
+      else
+        output("\n" + @ip_list.join("\n") + "\n\n")
+      end
+
       choice = input("Block these IPs? (y/n) ")
       exit unless choice == 'y' || choice == 'Y'
     end
@@ -119,12 +128,16 @@ class DenyIP
         exit
       end
 
-      opts.on('--force', 'Suppress confirmation message.') do |force|
+      opts.on('-f', '--force', 'Suppress confirmation message.') do |force|
         @options[:force] = force
       end
 
-      opts.on('-f', "--file <#{DEFAULT_DENY_FILE}>", 'Use the specified hosts.deny file.') do |file|
+      opts.on("--file <#{DEFAULT_DENY_FILE}>", 'Use the specified hosts.deny file.') do |file|
         @options[:file] = file
+      end
+
+      opts.on('-g', '--geolocate', 'Geolocate the IP(s) (this is the default).') do |geolocate|
+        @options[:geolocate] = geolocate
       end
     end
   end

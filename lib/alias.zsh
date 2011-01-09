@@ -10,7 +10,8 @@ alias ....='cd ../../..'
 alias dirs='dirs -v'
 alias ls='ls --color -F'
 alias l='ls -l'
-alias la='ls -a'
+alias la='ls -la'
+alias lsa='ls -a'
 alias lh='ls -lh'
 alias scr='screen -A -m -S'
 
@@ -33,5 +34,6 @@ alias bundle='nocorrect bundle'
 alias autotest='nocorrect autotest'
 
 # misc
+alias deny_ip="sudo $HOME/.zsh/bin/deny_ip"
 alias pfind='ps aux |grep '
 alias getip="curl -s http://checkip.dyndns.org | sed 's/[^0-9.]//g'"
