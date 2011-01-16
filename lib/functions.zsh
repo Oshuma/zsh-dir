@@ -27,8 +27,8 @@ function auto_ssh() {
 function rnethack() {
   recordings_dir="$HOME/.nethack/recordings"
 
-  if [[ ! -f $recordings_dir ]]; then
-    echo "Nethack recordings directory not found: $recordings_dir"
+  if [[ ! -w $recordings_dir ]]; then
+    echo "Nethack recordings directory '$recordings_dir' not found or not writable."
     return
   fi
 
