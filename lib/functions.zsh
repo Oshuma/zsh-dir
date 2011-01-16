@@ -22,3 +22,10 @@ function auto_ssh() {
     sleep $interval
   done
 }
+
+# Uses ttyrec to record nethack sessions.
+function rnethack() {
+  recordings_dir="$HOME/.nethack/recordings"
+  recording_path="$recordings_dir/nethack-`date +%Y.%m.%d-%H%M%S`.ttyrec"
+  ttyrec -e "nethack $*" $recording_path
+}
