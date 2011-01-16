@@ -26,6 +26,12 @@ function auto_ssh() {
 # Uses ttyrec to record nethack sessions.
 function rnethack() {
   recordings_dir="$HOME/.nethack/recordings"
+
+  if [[ ! -f $recordings_dir ]]; then
+    echo "Nethack recordings directory not found: $recordings_dir"
+    return
+  fi
+
   recording_path="$recordings_dir/nethack-`date +%Y.%m.%d-%H%M%S`.ttyrec"
   ttyrec -e "nethack $*" $recording_path
 }
