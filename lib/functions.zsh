@@ -34,4 +34,5 @@ function rnethack() {
 
   recording_path="$recordings_dir/nethack-`date +%Y.%m.%d-%H%M%S`.ttyrec"
   ttyrec -e "nethack $*" $recording_path
+  bzip2 $recording_path
 }
