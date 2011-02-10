@@ -32,9 +32,12 @@ zstyle ':completion:*' list-colors ''
 
 # Misc.
 autoload colors; colors;
-setopt prompt_subst
-setopt autocd
 unsetopt beep
+setopt auto_cd
+setopt auto_pushd
+setopt auto_list
+setopt pushd_ignore_dups
+setopt prompt_subst
 
 # smart URL quoting
 autoload -U url-quote-magic
