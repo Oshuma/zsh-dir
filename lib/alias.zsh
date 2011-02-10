@@ -3,8 +3,9 @@ alias mv='mv -i'
 alias rm='rm -i'
 
 alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
+alias -g ...='cd ../..'
+alias -g ....='cd ../../..'
+alias -g .....='cd ../../../..'
 
 # alias _='sudo'
 alias dirs='dirs -v'
@@ -27,11 +28,8 @@ alias gnb='git checkout -b ' # must pass new branch name
 # ruby
 alias ra='rake'
 alias rt='rake --tasks'
-alias rails='nocorrect rails'
 alias gemi='gem install --no-ri --no-rdoc '
 alias sgemi='sudo gem install --no-ri --no-rdoc '
-alias bundle='nocorrect bundle'
-alias autotest='nocorrect autotest'
 
 # misc
 alias deny_ip="sudo $HOME/.zsh/bin/deny_ip"
