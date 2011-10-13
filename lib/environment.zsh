@@ -8,3 +8,4 @@ export LC_ALL=C
 export PAGER=less
 export LESS='-F -M -R -X'
 export IRB_HISTORY_FILE=$HOME/.irb_history
+export WORDCHARS=${WORDCHARS:s,/,,}
