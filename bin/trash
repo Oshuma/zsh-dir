@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'fileutils'
+
 # Command line tool for Gnome users to send something to the Trash (with restore info).
 # TODO: Support trashing files of the same name.
 class Janitor
@@ -10,12 +12,13 @@ class Janitor
 
   class << self
     def sweep!(files = [])
+      create_trash_directory! unless trash_directory_exists?
       files.each { |file| trash!(file) }
     end
 
     def trash!(file)
       return unless File.exists?(file)
-      $stdout.puts "Trashing #{file}"
+      $stdout.puts "Trashing #{File.expand_path(file)}"
       create_info_for(file)
       move_to_trash(file)
     end
@@ -35,8 +38,23 @@ class Janitor
       end
     end
 
+    # Creates <tt>TRASH_DIR</tt> and its subdirectories (if they don't exist).
+    def create_trash_directory!
+      return if trash_directory_exists?
+      [ TRASH_DIR, FILES_DIR, INFO_DIR ].each do |dir|
+        FileUtils.mkdir_p(dir)
+      end
+    end
+
     def move_to_trash(file)
       system "mv #{file} #{FILES_DIR}"
+    end
+
+    # Returns <tt>true</tt> if <tt>TRASH_DIR</tt> and its subdirectories exist.
+    def trash_directory_exists?
+      File.exists?(TRASH_DIR) &&
+      File.exists?(FILES_DIR) &&
+      File.exists?(INFO_DIR)
     end
 
   end # self
