@@ -32,6 +32,7 @@ alias gemi='gem install --no-ri --no-rdoc '
 alias sgemi='sudo gem install --no-ri --no-rdoc '
 
 # misc
+alias apt_upgrade="sudo apt-get update && sudo apt-get upgrade -y"
 alias deny_ip="sudo $HOME/.zsh/bin/deny_ip"
 alias pfind='ps aux |grep '
 alias getip="curl -s http://checkip.dyndns.org | sed 's/[^0-9.]//g'"
