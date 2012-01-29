@@ -7,7 +7,7 @@ alias -g ...='cd ../..'
 alias -g ....='cd ../../..'
 alias -g .....='cd ../../../..'
 
-# alias _='sudo'
+alias _='sudo'
 alias dirs='dirs -v'
 alias ls='ls --color -F'
 alias l='ls -l'

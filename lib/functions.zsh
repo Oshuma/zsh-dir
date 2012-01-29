@@ -22,3 +22,15 @@ function auto_ssh() {
     sleep $interval
   done
 }
+
+# Clean up MongoDB if it wasn't shut down properly.
+function cleanup_mongodb() {
+  lock_file='/var/lib/mongodb/mongod.lock'
+  echo "Removing $lock_file"
+  sudo rm -f $lock_file
+
+  echo "Running 'mongod --repair'"
+  sudo mongod --repair
+
+  echo "Done."
+}
