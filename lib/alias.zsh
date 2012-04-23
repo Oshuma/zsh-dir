@@ -20,6 +20,7 @@ alias scr='screen -A -m -S'
 alias git='nocorrect git' # no zsh correction for 'git'
 alias ga='git add'
 alias gb='git branch -a -v'
+alias gcm='git commit -m ' # must pass commit message
 alias gd='git diff'
 alias gi='git status; echo; git branch -av'
 alias gm='git merge '
