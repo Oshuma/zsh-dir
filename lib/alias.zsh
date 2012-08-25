@@ -29,6 +29,8 @@ alias gnb='git checkout -b ' # must pass new branch name
 # ruby
 alias ra='rake'
 alias rt='rake --tasks'
+alias bra='bundle exec rake'
+alias brt='bundle exec rake --tasks'
 alias gemi='gem install --no-ri --no-rdoc '
 alias sgemi='sudo gem install --no-ri --no-rdoc '
 
